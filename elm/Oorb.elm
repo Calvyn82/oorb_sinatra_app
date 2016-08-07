@@ -2,10 +2,27 @@ module Oorb exposing (..)
 
 import Html exposing (..)
 import Html.App as App
+import Html.Attributes exposing (..)
+import Html.Events exposing (onInput)
 import String exposing (..)
 
 type alias Model =
-  { content : String }
+  { content : String
+  }
+
+model : Model
+model =
+  { content = "" }
+
+type Msg =
+  Change String
+
+update : Msg -> Model -> ( Model, Cmd a)
+update msg model =
+  case msg of
+    Change newContent ->
+      ({ model | content = newContent ++ model.content }, Cmd.none)
+
 
 main =
   App.programWithFlags
@@ -19,8 +36,9 @@ init : Model -> (Model, Cmd msg)
 init model =
     model ! []
 
+view : Model -> Html Msg
 view model =
-  div [] [ text model.content ]
-
-update : Cmd -> Model -> (Model, Cmd msg)
-update message model = model ! []
+  div []
+    [ input [ placeholder "Input Text", onInput Change ] []
+    , div [] [ text (  model.content ) ]
+    ]

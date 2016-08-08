@@ -26,13 +26,18 @@ class JSONBuilderTest < Minitest::Test
         ['b', 'bcd']
       ],
       'sections' => [
-        ['m', ['mnr', 'nr']],
-        ['a', ['abc', 'bc']]
+        ['m', 'mnr nr'],
+        ['a', 'abc bc']
       ]
     }
     assert_equal expected, @builder.build(
       letters:  @letter_feed,
       sections: @section_feed
     )
+  end
+
+  def test_build_chunk
+    expected = [['a', 'abc'], ['b', 'bcd']]
+    assert_equal expected, @builder.build_chunk(@letter_feed)
   end
 end

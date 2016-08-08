@@ -5,6 +5,8 @@ import Html.App as App
 import Html.Attributes exposing (..)
 import Html.Events     exposing (onInput)
 import String          exposing (..)
+import Dict            exposing (..)
+import Regex           exposing (..)
 
 type alias Letters  = List Letter
 
@@ -12,9 +14,7 @@ type alias Sections = List Sect
 
 type alias Letter = (String, String)
 
-type alias Sect   = (String, Combo )
-
-type alias Combo  = List String
+type alias Sect   = (String, String)
 
 type alias JsonData =
   { letters  : Letters
@@ -39,31 +39,46 @@ update msg model =
 buildRegex : String -> JsonData -> String
 buildRegex boxContents jsonData =
   boxContents
-    |> toLower
+    |> String.toLower
     |> String.split("")
-    |> List.map (\x -> convertChar x jsonData)
-    |> String.join ("")
+    |> List.map (\x -> convertUnit x jsonData )
+    |> String.join("")
 
-convertChar : String -> JsonData -> String
-convertChar l jsonData =
-  if isIn l jsonData.sections then
-    convertSect l jsonData
-  else if isIn l jsonData.letters then
-    convertLetter l jsonData
-  else
-    l
+convertUnit : String -> JsonData -> String
+convertUnit unit jsonData =
+  let lettersDict =
+        Dict.fromList jsonData.letters
 
-isIn : String -> List ( String, a) -> Bool
-isIn l list =
-  List.any (\x -> fst x == l) list
+      sectionsDict = buildSectionsDict jsonData
+  in
+      if Dict.get unit lettersDict |> Maybe.withDefault "nope" |> (/=) "nope" then
+        "[" ++ (Dict.get unit lettersDict |> Maybe.withDefault "") ++ "]"
+      else if Dict.get unit sectionsDict |> Maybe.withDefault "nope" |> (/=) "nope" then
+        "[" ++ (Dict.get unit sectionsDict |> Maybe.withDefault "") ++ "]?"
+      else if unit == " " then
+        "\\s?"
+      else
+        unit
 
+buildSectionsDict : JsonData -> Dict
+buildSectionsDict jsonData =
+  let
+      sectionsKeys = Dict.fromList jsonData.sections
+        |> Dict.keys
 
-convertSect l jsonData =
-  "SECTION"
+      outputDict = Dict.fromList jsonData.sections
+  in
+      List.foldl (formatValues outputDict sectionsKeys)
 
-convertLetter l jsonData =
-  "LETTER"
-
+formatValues memo key =
+  let newValue =
+        Dict.get key memo
+          |> Maybe.withDefault ""
+          |> String.split(" ")
+          |> String.join("][")
+  in
+      memo
+        |> Dict.insert key ("[" ++ newValue ++ "]")
 
 main =
   App.programWithFlags

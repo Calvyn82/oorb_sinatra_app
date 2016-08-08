@@ -6,16 +6,12 @@ class JSONBuilder
 
   def build(letters: LETTERS, sections: SECTIONS)
     {
-      'letters'  => build_letters(letters),
-      'sections' => build_sections(sections)
+      'letters'  => build_chunk(letters),
+      'sections' => build_chunk(sections)
     }
   end
 
-  def build_letters(letters)
-    letters.map { |line| [line[0], line] }
-  end
-
-  def build_sections(sections)
-    sections.map { |line| [line[0], line.split(' ')] }
+  def build_chunk(file)
+    file.map { |line| [line[0], line] }
   end
 end

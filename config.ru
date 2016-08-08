@@ -1,2 +1,2 @@
-require 'oorb'
+require './oorb'
 run Sinatra::Application

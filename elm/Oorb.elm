@@ -1,28 +1,47 @@
 module Oorb exposing (..)
 
-import Html exposing (..)
+import Html            exposing (..)
 import Html.App as App
 import Html.Attributes exposing (..)
-import Html.Events exposing (onInput)
-import String exposing (..)
+import Html.Events     exposing (onInput)
+import String          exposing (..)
+import Dict            exposing (..)
 
-type alias Model =
-  { content : String
+type alias Letters  = List String
+
+type alias Sections = List String
+
+type alias JsonData =
+  { letters  : Letters
+  , sections : Sections
   }
 
-model : Model
-model =
-  { content = "" }
+type alias Model =
+  { jsonData        : JsonData
+  , textBoxContents : String
+  , output          : String
+  }
 
 type Msg =
   Change String
 
-update : Msg -> Model -> ( Model, Cmd a)
+update : Msg -> Model -> ( Model, Cmd Msg)
 update msg model =
   case msg of
-    Change newContent ->
-      ({ model | content = newContent ++ model.content }, Cmd.none)
+    Change newTextBoxContents ->
+      ({ model | output = buildRegex newTextBoxContents model.jsonData }, Cmd.none)
 
+buildRegex : String -> JsonData -> String
+buildRegex boxContents jsonData =
+  boxContents
+    |> toLower
+    |> String.toList
+    |> List.map (\x -> convertLetter x jsonData)
+    |> String.join ("")
+
+convertLetter : Char -> JsonData -> String
+convertLetter l jsonData =
+  String.fromChar l
 
 main =
   App.programWithFlags
@@ -40,5 +59,5 @@ view : Model -> Html Msg
 view model =
   div []
     [ input [ placeholder "Input Text", onInput Change ] []
-    , div [] [ text (  model.content ) ]
+    , div [] [ text (  model.output ) ]
     ]

@@ -19,7 +19,7 @@ class JSONBuilderTest < Minitest::Test
     assert JSONBuilder::SECTIONS.any?
   end
 
-  def test_build_returns_formatted_json
+  def test_build_returns_formatted_hash
     expected = {
       'letters'  => @letter_feed,
       'sections' => @section_feed

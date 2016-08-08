@@ -21,15 +21,9 @@ class JSONBuilderTest < Minitest::Test
 
   def test_build_returns_formatted_json
     expected = {
-      'letters' => {
-        'a' => 'abc',
-        'b' => 'bcd'
-      },
-      'sections' => {
-        'm' => ['mnr', 'nr'], 
-        'a' => ['abc', 'bc']
-      }
-    }.to_json
+      'letters'  => @letter_feed,
+      'sections' => @section_feed
+    }
     assert_equal expected, @builder.build(
       letters:  @letter_feed,
       sections: @section_feed

@@ -6,16 +6,8 @@ class JSONBuilder
 
   def build(letters: LETTERS, sections: SECTIONS)
     {
-      'letters'  => build_letters(letters),
-      'sections' => build_sections(sections)
-    }.to_json
-  end
-
-  def build_letters(letters)
-    letters.reduce({})  { |acc, line| acc.merge({line[0] => line } ) }
-  end
-
-  def build_sections(sections)
-    sections.reduce({}) { |acc, line| acc.merge({line[0] => line.split(' ')})}
+      'letters'  => letters,
+      'sections' => sections
+    }
   end
 end

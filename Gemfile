@@ -1,9 +1,12 @@
 source 'https://rubygems.org'
 gem 'sinatra'
-gem 'shotgun'
-gem 'minitest'
-gem 'rack-test'
-gem 'rack-console'
 gem 'rake'
-gem 'rerun'
-gem 'foreman'
+
+group :development, :test do
+  gem 'foreman'
+  gem 'shotgun'
+  gem 'minitest'
+  gem 'rack-test'
+  gem 'rack-console'
+  gem 'rerun'
+end

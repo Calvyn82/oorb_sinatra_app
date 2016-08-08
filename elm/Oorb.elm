@@ -53,14 +53,18 @@ convertUnit unit jsonData =
   in
       if Dict.get unit lettersDict |> Maybe.withDefault "nope" |> (/=) "nope" then
         "[" ++ (Dict.get unit lettersDict |> Maybe.withDefault "") ++ "]"
+
       else if Dict.get unit sectionsDict |> Maybe.withDefault "nope" |> (/=) "nope" then
         "[" ++ (Dict.get unit sectionsDict |> Maybe.withDefault "") ++ "]?"
-      else if unit == " " then
-        "\\s?"
-      else
-        unit
 
-buildSectionsDict : JsonData -> Dict
+      else if unit == " " then
+        "\x5cs?"
+
+      else
+        escape unit
+
+
+buildSectionsDict : JsonData -> Dict String String
 buildSectionsDict jsonData =
   let
       sectionsKeys = Dict.fromList jsonData.sections
@@ -68,17 +72,15 @@ buildSectionsDict jsonData =
 
       outputDict = Dict.fromList jsonData.sections
   in
-      List.foldl (formatValues outputDict sectionsKeys)
+      List.foldl ( \x y ->
+        Dict.insert x (formatValue (Dict.get x outputDict)) y
+        ) outputDict sectionsKeys
 
-formatValues memo key =
-  let newValue =
-        Dict.get key memo
-          |> Maybe.withDefault ""
-          |> String.split(" ")
-          |> String.join("][")
-  in
-      memo
-        |> Dict.insert key ("[" ++ newValue ++ "]")
+formatValue value =
+  value
+    |> Maybe.withDefault ""
+    |> String.split(" ")
+    |> String.join("][")
 
 main =
   App.programWithFlags

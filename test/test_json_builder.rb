@@ -21,8 +21,14 @@ class JSONBuilderTest < Minitest::Test
 
   def test_build_returns_formatted_hash
     expected = {
-      'letters'  => @letter_feed,
-      'sections' => @section_feed
+      'letters'  => [
+        ['a', 'abc'],
+        ['b', 'bcd']
+      ],
+      'sections' => [
+        ['m', ['mnr', 'nr']],
+        ['a', ['abc', 'bc']]
+      ]
     }
     assert_equal expected, @builder.build(
       letters:  @letter_feed,

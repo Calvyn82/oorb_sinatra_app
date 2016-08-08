@@ -6,8 +6,16 @@ class JSONBuilder
 
   def build(letters: LETTERS, sections: SECTIONS)
     {
-      'letters'  => letters,
-      'sections' => sections
+      'letters'  => build_letters(letters),
+      'sections' => build_sections(sections)
     }
+  end
+
+  def build_letters(letters)
+    letters.map { |line| [line[0], line] }
+  end
+
+  def build_sections(sections)
+    sections.map { |line| [line[0], line.split(' ')] }
   end
 end

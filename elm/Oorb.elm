@@ -5,11 +5,16 @@ import Html.App as App
 import Html.Attributes exposing (..)
 import Html.Events     exposing (onInput)
 import String          exposing (..)
-import Dict            exposing (..)
 
-type alias Letters  = List String
+type alias Letters  = List Letter
 
-type alias Sections = List String
+type alias Sections = List Sect
+
+type alias Letter = (String, String)
+
+type alias Sect   = (String, Combo )
+
+type alias Combo  = List String
 
 type alias JsonData =
   { letters  : Letters
@@ -35,13 +40,30 @@ buildRegex : String -> JsonData -> String
 buildRegex boxContents jsonData =
   boxContents
     |> toLower
-    |> String.toList
-    |> List.map (\x -> convertLetter x jsonData)
+    |> String.split("")
+    |> List.map (\x -> convertChar x jsonData)
     |> String.join ("")
 
-convertLetter : Char -> JsonData -> String
+convertChar : String -> JsonData -> String
+convertChar l jsonData =
+  if isIn l jsonData.sections then
+    convertSect l jsonData
+  else if isIn l jsonData.letters then
+    convertLetter l jsonData
+  else
+    l
+
+isIn : String -> List ( String, a) -> Bool
+isIn l list =
+  List.any (\x -> fst x == l) list
+
+
+convertSect l jsonData =
+  "SECTION"
+
 convertLetter l jsonData =
-  String.fromChar l
+  "LETTER"
+
 
 main =
   App.programWithFlags

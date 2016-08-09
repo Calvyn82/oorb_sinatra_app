@@ -9,4 +9,5 @@ get '/' do
     "output"          => "This is where your regex will appear."
   }.to_json
   erb :index
+
 end

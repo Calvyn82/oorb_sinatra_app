@@ -24,6 +24,7 @@ GEM
     rerun (0.11.0)
       listen (~> 3.0)
     ruby_dep (1.4.0)
+    sass (3.4.22)
     shotgun (0.9.1)
       rack (>= 1.0)
     sinatra (1.4.7)
@@ -43,8 +44,9 @@ DEPENDENCIES
   rack-test
   rake
   rerun
+  sass
   shotgun
   sinatra
 
 BUNDLED WITH
-   1.11.2
+   1.12.5

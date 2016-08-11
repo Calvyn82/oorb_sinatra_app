@@ -8114,7 +8114,9 @@ var _user$project$Oorb$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
-			[]),
+			[
+				_elm_lang$html$Html_Attributes$class('center')
+			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
 				A2(

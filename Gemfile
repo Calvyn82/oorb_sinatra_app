@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 gem 'sinatra'
 gem 'rake'
+gem 'sass'
 
 group :development, :test do
   gem 'foreman'

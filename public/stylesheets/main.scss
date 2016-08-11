@@ -1,0 +1,28 @@
+$font-stack:    Helvetica, sans-serif;
+$primary-color: #333;
+
+body {
+  font: 100% $font-stack;
+  font-size: 18px;
+  color: $primary-color;
+  margin: auto;
+  width: 75%;
+  border: 3px primary-color;
+  padding: 10px;
+  background-color: lightblue;
+}
+
+h1 {
+  font: 500% $font-stack;
+}
+
+.center {
+  text-align: center;
+}
+
+input {
+  font-size: 24px;
+  width: 50%;
+  height: 30px;
+  margin: 10px;
+}

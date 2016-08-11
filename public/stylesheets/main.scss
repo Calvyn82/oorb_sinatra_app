@@ -3,6 +3,7 @@ $primary-color: #333;
 
 body {
   font: 100% $font-stack;
+  font-size: 18px;
   color: $primary-color;
   margin: auto;
   width: 75%;
@@ -20,7 +21,8 @@ h1 {
 }
 
 input {
+  font-size: 24px;
   width: 50%;
-  height: 15px;
+  height: 30px;
   margin: 10px;
 }

@@ -1,0 +1,21 @@
+body {
+  font: 100% Helvetica, sans-serif;
+  color: #333;
+  margin: auto;
+  width: 75%;
+  border: 3px primary-color;
+  padding: 10px;
+  background-color: lightblue; }
+
+h1 {
+  font: 500% Helvetica, sans-serif; }
+
+.center {
+  text-align: center; }
+
+input {
+  width: 50%;
+  height: 15px;
+  margin: 10px; }
+
+/*# sourceMappingURL=main.css.map */

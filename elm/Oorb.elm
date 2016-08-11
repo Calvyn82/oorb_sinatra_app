@@ -96,7 +96,7 @@ init model =
 
 view : Model -> Html Msg
 view model =
-  div []
+  div [class "center"]
     [ input [ placeholder "Input Text", onInput Change ] []
     , div [] [ text (  model.output ) ]
     ]

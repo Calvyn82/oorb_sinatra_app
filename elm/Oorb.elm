@@ -98,5 +98,6 @@ view : Model -> Html Msg
 view model =
   div [class "center"]
     [ input [ placeholder "Input Text", onInput Change ] []
-    , div [] [ text (  model.output ) ]
+    , button [class "oorb-btn", attribute "data-clipboard-target" "#copy-to-me"] [text "Copy Regex"]
+    , div [id "copy-to-me"] [ text (  model.output ) ]
     ]
